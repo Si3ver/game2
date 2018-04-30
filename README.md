@@ -1,5 +1,7 @@
 # 一个用HTML5 Canvas制作的小游戏
 
+游戏入口： https://si3ver.github.io/h5game2/
+
 ## 游戏规则
 
 + 玩家需要不断点击屏幕中的黑块✌️
