@@ -87,9 +87,9 @@ window.onload = function() {
     initGame();
 
     // 消除白块
-    oC.onclick = function(ev){
-        let x = ev.offsetX,
-            y = ev.offsetY;
+    oC.addEventListener('touchstart', function(ev){
+        let x = ev.targetTouches[0].clientX,
+            y = ev.targetTouches[0].clientY;
         let r = Math.floor((y-top) / block_h),
             c = Math.floor(x / block_w);
         if(data[r][c] === 0){
@@ -101,7 +101,7 @@ window.onload = function() {
             draw();             // 重绘
             speed += 0.2;       // 增加速度
         }
-    }
+    }, false);
     // 再来一局
     oBtn.onclick = function(){
         oDiv.style.display='none';
