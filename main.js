@@ -30,7 +30,7 @@ window.onload = function() {
     function initGame(){
         // 初始化数据
         top = -block_h;
-        speed = 1;
+        speed = 1.0;
         data = [];
         for(let i = 0; i < R+1; ++i){
             data.push(createLine());
@@ -45,7 +45,7 @@ window.onload = function() {
                 let row = data.pop();       // 删一行
                 if(row.includes(1)){
                     clearInterval(timer);
-                    alert("黑块儿未消除，游戏结束！");
+                    alert(`得分:${Math.round((speed-1.0)*5)}游戏结束！`);
                     oDiv.style.display = 'block';
                 }
                 data.unshift(createLine()); // 新生成一行
@@ -53,20 +53,37 @@ window.onload = function() {
             }
         }, 16);
     }
-    
+  
+    window.onresize = function() {
+        let w = document.documentElement.clientWidth,
+            h = document.documentElement.clientHeight;
+        if(w > h){  // 防止横屏时太丑
+            w=h;
+        }
+        oC.width = w;
+        oC.height = h;
+        oC.style.width = w+'px';
+        oC.style.height = h+'px';
+        oDiv.style.width = w+'px';
+        oDiv.style.height = h+'px';
+    }
+
     // 准备阶段
     let oC = document.getElementById('c1');
     let gd = oC.getContext('2d');
+    let oDiv = document.getElementById('div1');
+    let oBtn = document.getElementById('btn1');
+
+    window.onresize();
+
     const {width, height} = oC;
     const R=4, C=4;
     const block_w = width/C, block_h = height/R;
-    let oDiv = document.getElementById('div1');
-    let oBtn = document.getElementById('btn1');
     let timer;
     let data = [];
     let top;
     let speed;
-    
+
     initGame();
 
     // 消除白块
@@ -77,7 +94,7 @@ window.onload = function() {
             c = Math.floor(x / block_w);
         if(data[r][c] === 0){
             clearInterval(timer);   // 关闭定时器
-            alert('踩到白块儿了，游戏结束！');
+            alert(`得分:${Math.round((speed-1.0)*5)}游戏结束！`);
             oDiv.style.display='block';
         }else{
             data[r][c] = 0;     // 黑块置白
